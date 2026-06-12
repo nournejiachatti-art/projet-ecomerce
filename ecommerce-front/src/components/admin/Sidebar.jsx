@@ -10,197 +10,114 @@ const Sidebar = () => {
     navigate('/admin-login');
   };
 
+  const sidebarStyle = {
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    width: '280px',
+    height: '100vh',
+    backgroundColor: '#1a6b6b',
+    color: 'white',
+    overflowY: 'auto',
+    overflowX: 'hidden',
+    zIndex: 9999,
+    padding: '0',
+    margin: '0',
+    display: 'flex',
+    flexDirection: 'column'
+  };
+
+  const headerStyle = {
+    padding: '2rem 1.5rem',
+    borderBottom: '1px solid rgba(255,255,255,0.1)',
+    flexShrink: 0
+  };
+
+  const navStyle = {
+    flex: 1,
+    padding: '1.5rem 0',
+    overflowY: 'auto',
+    overflowX: 'hidden'
+  };
+
+  const linkStyle = (isActive) => ({
+    display: 'flex',
+    alignItems: 'center',
+    gap: '12px',
+    padding: '12px 24px',
+    color: 'white',
+    textDecoration: 'none',
+    backgroundColor: isActive ? 'rgba(255,255,255,0.15)' : 'transparent',
+    borderLeft: isActive ? '3px solid white' : '3px solid transparent',
+    transition: 'all 0.3s ease',
+    width: '100%',
+    boxSizing: 'border-box'
+  });
+
+  const footerStyle = {
+    padding: '1.5rem',
+    borderTop: '1px solid rgba(255,255,255,0.1)',
+    flexShrink: 0
+  };
+
+  const buttonStyle = {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '12px',
+    width: '100%',
+    padding: '10px 16px',
+    backgroundColor: 'rgba(255,255,255,0.1)',
+    border: 'none',
+    borderRadius: '8px',
+    color: 'white',
+    cursor: 'pointer',
+    transition: 'all 0.3s ease',
+    fontFamily: 'inherit',
+    fontSize: '14px'
+  };
+
   return (
-    <div style={{
-      width: '280px',
-      background: 'linear-gradient(180deg, #1a6b6b 0%, #0d4f4f 100%)',
-      color: 'white',
-      minHeight: '100vh',
-      position: 'fixed',
-      left: 0,
-      top: 0,
-      bottom: 0,
-      zIndex: 9999,
-      boxShadow: '2px 0 10px rgba(0,0,0,0.1)',
-      overflowY: 'auto',
-      display: 'flex',
-      flexDirection: 'column'
-    }}>
-      <div style={{ padding: '2rem 1.5rem', borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
+    <div style={sidebarStyle}>
+      {/* Header */}
+      <div style={headerStyle}>
         <h3 style={{ fontFamily: 'Playfair Display', margin: 0, fontSize: '1.5rem' }}>ShopEase</h3>
-        <p style={{ fontSize: '0.75rem', opacity: 0.7, margin: '0.5rem 0 0' }}>Espace Administration</p>
+        <p style={{ fontSize: '0.75rem', opacity: 0.7, margin: '0.5rem 0 0' }}>Admin Panel</p>
       </div>
-      
-      <nav style={{ padding: '1.5rem 0', flex: 1, overflowY: 'auto' }}>
-        <NavLink 
-          to="/dashboard" 
-          style={({ isActive }) => ({
-            display: 'flex',
-            alignItems: 'center',
-            gap: '12px',
-            padding: '12px 24px',
-            color: 'white',
-            textDecoration: 'none',
-            backgroundColor: isActive ? 'rgba(255,255,255,0.15)' : 'transparent',
-            transition: 'all 0.3s ease',
-            borderLeft: isActive ? '3px solid white' : '3px solid transparent'
-          })}
-        >
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
-            <line x1="9" y1="9" x2="15" y2="15"/>
-            <line x1="15" y1="9" x2="9" y2="15"/>
-          </svg>
-          Tableau de bord
+
+      {/* Navigation */}
+      <nav style={navStyle}>
+        <NavLink to="/dashboard" style={({ isActive }) => linkStyle(isActive)}>
+          📊 Dashboard
         </NavLink>
-        
-        <NavLink 
-          to="/admin/orders" 
-          style={({ isActive }) => ({
-            display: 'flex',
-            alignItems: 'center',
-            gap: '12px',
-            padding: '12px 24px',
-            color: 'white',
-            textDecoration: 'none',
-            backgroundColor: isActive ? 'rgba(255,255,255,0.15)' : 'transparent',
-            borderLeft: isActive ? '3px solid white' : '3px solid transparent'
-          })}
-        >
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <rect x="2" y="4" width="20" height="16" rx="2"/>
-            <line x1="2" y1="8" x2="22" y2="8"/>
-          </svg>
-          Commandes
+        <NavLink to="/admin/orders" style={({ isActive }) => linkStyle(isActive)}>
+          📋 Orders
         </NavLink>
-        
-        <NavLink 
-          to="/manage-users" 
-          style={({ isActive }) => ({
-            display: 'flex',
-            alignItems: 'center',
-            gap: '12px',
-            padding: '12px 24px',
-            color: 'white',
-            textDecoration: 'none',
-            backgroundColor: isActive ? 'rgba(255,255,255,0.15)' : 'transparent',
-            borderLeft: isActive ? '3px solid white' : '3px solid transparent'
-          })}
-        >
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-            <circle cx="12" cy="7" r="4"/>
-          </svg>
-          Utilisateurs
+        <NavLink to="/manage-users" style={({ isActive }) => linkStyle(isActive)}>
+          👥 Users
         </NavLink>
-        
-        <NavLink 
-          to="/manage-categories" 
-          style={({ isActive }) => ({
-            display: 'flex',
-            alignItems: 'center',
-            gap: '12px',
-            padding: '12px 24px',
-            color: 'white',
-            textDecoration: 'none',
-            backgroundColor: isActive ? 'rgba(255,255,255,0.15)' : 'transparent',
-            borderLeft: isActive ? '3px solid white' : '3px solid transparent'
-          })}
-        >
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
-            <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
-          </svg>
-          Catégories
+        <NavLink to="/manage-categories" style={({ isActive }) => linkStyle(isActive)}>
+          📂 Categories
         </NavLink>
-        
-        <NavLink 
-          to="/manage-products" 
-          style={({ isActive }) => ({
-            display: 'flex',
-            alignItems: 'center',
-            gap: '12px',
-            padding: '12px 24px',
-            color: 'white',
-            textDecoration: 'none',
-            backgroundColor: isActive ? 'rgba(255,255,255,0.15)' : 'transparent',
-            borderLeft: isActive ? '3px solid white' : '3px solid transparent'
-          })}
-        >
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <rect x="2" y="4" width="20" height="16" rx="2"/>
-            <line x1="2" y1="8" x2="22" y2="8"/>
-          </svg>
-          Produits
+        <NavLink to="/manage-products" style={({ isActive }) => linkStyle(isActive)}>
+          📦 Products
         </NavLink>
-        
-        <NavLink 
-          to="/manage-suppliers" 
-          style={({ isActive }) => ({
-            display: 'flex',
-            alignItems: 'center',
-            gap: '12px',
-            padding: '12px 24px',
-            color: 'white',
-            textDecoration: 'none',
-            backgroundColor: isActive ? 'rgba(255,255,255,0.15)' : 'transparent',
-            borderLeft: isActive ? '3px solid white' : '3px solid transparent'
-          })}
-        >
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <path d="M4 8h16M4 16h16M8 4v4M16 4v4M4 4h16v16H4z"/>
-          </svg>
-          Fournisseurs
+        <NavLink to="/manage-suppliers" style={({ isActive }) => linkStyle(isActive)}>
+          🤝 Suppliers
         </NavLink>
-        
-        <NavLink 
-          to="/supplier-invoice" 
-          style={({ isActive }) => ({
-            display: 'flex',
-            alignItems: 'center',
-            gap: '12px',
-            padding: '12px 24px',
-            color: 'white',
-            textDecoration: 'none',
-            backgroundColor: isActive ? 'rgba(255,255,255,0.15)' : 'transparent',
-            borderLeft: isActive ? '3px solid white' : '3px solid transparent'
-          })}
-        >
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <rect x="2" y="4" width="20" height="16" rx="2"/>
-            <line x1="2" y1="8" x2="22" y2="8"/>
-            <line x1="2" y1="12" x2="22" y2="12"/>
-          </svg>
-          Factures
+        <NavLink to="/supplier-invoice" style={({ isActive }) => linkStyle(isActive)}>
+          📄 Invoices
         </NavLink>
       </nav>
-      
-      <div style={{ padding: '1.5rem', borderTop: '1px solid rgba(255,255,255,0.1)', marginTop: 'auto' }}>
+
+      {/* Footer */}
+      <div style={footerStyle}>
         <button 
           onClick={handleLogout}
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '12px',
-            width: '100%',
-            padding: '10px 16px',
-            backgroundColor: 'rgba(255,255,255,0.1)',
-            border: 'none',
-            borderRadius: '8px',
-            color: 'white',
-            cursor: 'pointer',
-            transition: 'all 0.3s ease',
-            fontFamily: 'inherit'
-          }}
+          style={buttonStyle}
           onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.2)'}
           onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.1)'}
         >
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
-            <polyline points="16 17 21 12 16 7"/>
-            <line x1="21" y1="12" x2="9" y2="12"/>
-          </svg>
-          Déconnexion
+          🚪 Logout
         </button>
       </div>
     </div>
