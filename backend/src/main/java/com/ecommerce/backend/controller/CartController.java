@@ -3,6 +3,7 @@ package com.ecommerce.backend.controller;
 import com.ecommerce.backend.config.JwtUtil;
 import com.ecommerce.backend.model.*;
 import com.ecommerce.backend.repository.*;
+import com.ecommerce.backend.service.EmailService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,6 +27,7 @@ public class CartController {
     private final OrderRepository orderRepository;
     private final OrderItemRepository orderItemRepository;
     private final JwtUtil jwtUtil;
+    private final EmailService emailService;
 
     public CartController(UserRepository userRepository,
                          ProductRepository productRepository,
@@ -33,7 +35,8 @@ public class CartController {
                          CartItemRepository cartItemRepository,
                          OrderRepository orderRepository,
                          OrderItemRepository orderItemRepository,
-                         JwtUtil jwtUtil) {
+                         JwtUtil jwtUtil,
+                         EmailService emailService) {
         this.userRepository = userRepository;
         this.productRepository = productRepository;
         this.cartRepository = cartRepository;
@@ -41,6 +44,7 @@ public class CartController {
         this.orderRepository = orderRepository;
         this.orderItemRepository = orderItemRepository;
         this.jwtUtil = jwtUtil;
+        this.emailService = emailService;
     }
 
     private User getUserFromToken(String token) {
@@ -258,6 +262,9 @@ public class CartController {
         order.setTotalAmount(total);
         Order savedOrder = orderRepository.save(order);
         
+        // Send verification email
+        emailService.sendOrderVerificationEmail(user.getEmail(), verificationCode, savedOrder.getOrderNumber());
+        
         // Clear cart
         cart.getItems().clear();
         cartRepository.save(cart);
@@ -311,6 +318,9 @@ public class CartController {
         }
         
         orderRepository.save(order);
+        
+        // Send confirmation email
+        emailService.sendOrderConfirmedEmail(user.getEmail(), orderNumber);
         
         return ResponseEntity.ok(Map.of("message", "Commande vérifiée avec succès"));
     }
