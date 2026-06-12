@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Container, Table, Button, Row, Col, Form, Alert } from 'react-bootstrap';
 import { getCart, updateCartItem, removeFromCart, clearCart } from '../services/api';
+import { getImageUrl } from '../services/imageUploadService';
 import LoadingSpinner from '../components/common/LoadingSpinner';
 
 const CartPage = () => {
@@ -108,7 +109,7 @@ const CartPage = () => {
                     <td>
                       <div className="d-flex align-items-center">
                         <img 
-                          src={item.product.imageUrl || 'https://placehold.co/60x60/e0e0e0/999?text=Image'} 
+                          src={getImageUrl(item.product.imageUrl) || 'https://placehold.co/60x60/e0e0e0/999?text=Image'} 
                           alt={item.product.name} 
                           style={{ width: '60px', height: '60px', objectFit: 'cover', borderRadius: '8px', marginRight: '15px' }} 
                         />
