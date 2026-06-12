@@ -72,7 +72,7 @@ const CheckoutPage = () => {
       const response = await checkout(shippingAddress, '0612345678');
       
       setOrderNumber(response.data.orderNumber);
-      setVerificationCode(response.data.verificationCode);
+      setVerificationCode(''); // Don't auto-fill, let user get from email
       setShowVerification(true);
     } catch (error) {
       console.error('Erreur commande:', error);
