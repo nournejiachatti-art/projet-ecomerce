@@ -54,6 +54,7 @@ public class SecurityConfig {
                 // Endpoints publics (sans token)
                 .requestMatchers(new AntPathRequestMatcher("/api/auth/**")).permitAll()
                 .requestMatchers(new AntPathRequestMatcher("/api/public/**")).permitAll()
+                .requestMatchers(new AntPathRequestMatcher("/api/upload/**")).permitAll()
                 .requestMatchers(new AntPathRequestMatcher("/api/admin/public/**")).permitAll()  // AJOUTÉ
                 .requestMatchers(new AntPathRequestMatcher("/api/test/**")).permitAll()
                 .requestMatchers(new AntPathRequestMatcher("/uploads/**")).permitAll()
