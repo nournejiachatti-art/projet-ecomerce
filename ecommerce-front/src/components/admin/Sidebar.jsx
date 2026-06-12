@@ -20,15 +20,18 @@ const Sidebar = () => {
       left: 0,
       top: 0,
       bottom: 0,
-      zIndex: 1000,
-      boxShadow: '2px 0 10px rgba(0,0,0,0.1)'
+      zIndex: 9999,
+      boxShadow: '2px 0 10px rgba(0,0,0,0.1)',
+      overflowY: 'auto',
+      display: 'flex',
+      flexDirection: 'column'
     }}>
       <div style={{ padding: '2rem 1.5rem', borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
         <h3 style={{ fontFamily: 'Playfair Display', margin: 0, fontSize: '1.5rem' }}>ShopEase</h3>
         <p style={{ fontSize: '0.75rem', opacity: 0.7, margin: '0.5rem 0 0' }}>Espace Administration</p>
       </div>
       
-      <nav style={{ padding: '1.5rem 0' }}>
+      <nav style={{ padding: '1.5rem 0', flex: 1, overflowY: 'auto' }}>
         <NavLink 
           to="/dashboard" 
           style={({ isActive }) => ({
@@ -172,7 +175,7 @@ const Sidebar = () => {
         </NavLink>
       </nav>
       
-      <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '1.5rem', borderTop: '1px solid rgba(255,255,255,0.1)' }}>
+      <div style={{ padding: '1.5rem', borderTop: '1px solid rgba(255,255,255,0.1)', marginTop: 'auto' }}>
         <button 
           onClick={handleLogout}
           style={{
