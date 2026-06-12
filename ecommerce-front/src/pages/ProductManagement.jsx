@@ -305,8 +305,8 @@ const ProductManagement = () => {
                           <td>{product.purchasePrice} €</td>
                           <td>{product.sellingPrice} €</td>
                           <td>
-                            <span className={product.quantity < 10 ? 'text-danger fw-bold' : ''}>
-                              {product.quantity}
+                            <span className={(product.stock || product.quantity) < 10 ? 'text-danger fw-bold' : ''}>
+                              {product.stock || product.quantity}
                             </span>
                           </td>
                           <td>{product.category?.name || '-'}</td>

@@ -256,6 +256,13 @@ public class AdminController {
         product.setPurchasePrice(Double.parseDouble(productData.get("purchasePrice").toString()));
         product.setSellingPrice(Double.parseDouble(productData.get("sellingPrice").toString()));
         
+        // Handle stock/quantity
+        if (productData.containsKey("stock") && productData.get("stock") != null) {
+            product.setStock(Integer.parseInt(productData.get("stock").toString()));
+        } else if (productData.containsKey("quantity") && productData.get("quantity") != null) {
+            product.setQuantity(Integer.parseInt(productData.get("quantity").toString()));
+        }
+        
         if (productData.containsKey("categoryId") && productData.get("categoryId") != null) {
             Long categoryId = Long.parseLong(productData.get("categoryId").toString());
             Optional<Category> categoryOpt = categoryRepository.findById(categoryId);
@@ -296,6 +303,13 @@ public class AdminController {
         product.setPurchasePrice(Double.parseDouble(productData.get("purchasePrice").toString()));
         product.setSellingPrice(Double.parseDouble(productData.get("sellingPrice").toString()));
         product.setEnabled(Boolean.parseBoolean(productData.getOrDefault("enabled", true).toString()));
+        
+        // Handle stock/quantity
+        if (productData.containsKey("stock") && productData.get("stock") != null) {
+            product.setStock(Integer.parseInt(productData.get("stock").toString()));
+        } else if (productData.containsKey("quantity") && productData.get("quantity") != null) {
+            product.setQuantity(Integer.parseInt(productData.get("quantity").toString()));
+        }
         
         if (productData.containsKey("categoryId") && productData.get("categoryId") != null) {
             Long categoryId = Long.parseLong(productData.get("categoryId").toString());

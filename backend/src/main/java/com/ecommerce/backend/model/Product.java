@@ -62,6 +62,10 @@ public class Product {
     public int getQuantity() { return quantity; }
     public void setQuantity(int quantity) { this.quantity = quantity; }
     
+    // For compatibility with frontend "stock" field
+    public int getStock() { return quantity; }
+    public void setStock(int stock) { this.quantity = stock; }
+    
     public String getImageUrl() { return imageUrl; }
     public void setImageUrl(String imageUrl) { this.imageUrl = imageUrl; }
     
