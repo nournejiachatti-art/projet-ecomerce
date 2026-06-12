@@ -68,7 +68,8 @@ p {
 }
 
 .navbar-brand {
-  background: linear-gradient(135deg, var(--rose) 0%, var(--rose-deep) 100%) !important;
+  font-family: 'Playfair Display', serif;
+  color: var(--rose-deep) !important;
 }
 
 .nav-link {
