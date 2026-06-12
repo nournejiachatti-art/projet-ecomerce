@@ -34,6 +34,10 @@ public class User {
     @JsonIgnore
     private String verificationCode;
     
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private Cart cart;
+    
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     
@@ -47,6 +51,9 @@ public class User {
     protected void onUpdate() {
         updatedAt = LocalDateTime.now();
     }
+    
+    public Cart getCart() { return cart; }
+    public void setCart(Cart cart) { this.cart = cart; }
     
     // Getters et Setters
     public Long getId() { return id; }
