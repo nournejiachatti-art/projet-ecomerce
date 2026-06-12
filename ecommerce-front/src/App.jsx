@@ -19,6 +19,7 @@ import SupplierInvoicePage from './pages/SupplierInvoicePage';
 import CategoryManagement from './pages/CategoryManagement';
 import UserManagement from './pages/UserManagement';
 import AdminOrdersPage from './pages/AdminOrdersPage';
+import MyOrdersPage from './pages/MyOrdersPage';
 function App() {
   return (
     <Routes>
@@ -92,6 +93,15 @@ function App() {
           <Navbar />
           <main className="flex-grow-1">
             <CheckoutPage />
+          </main>
+          <Footer />
+        </>
+      } />
+      <Route path="/my-orders" element={
+        <>
+          <Navbar />
+          <main className="flex-grow-1">
+            <MyOrdersPage />
           </main>
           <Footer />
         </>

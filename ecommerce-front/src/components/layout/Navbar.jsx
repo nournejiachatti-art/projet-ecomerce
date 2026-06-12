@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Navbar, Nav, Container, Button, Modal, Form, Alert } from 'react-bootstrap';
+import { getCart } from '../services/api';
 
 const NavigationBar = () => {
   const navigate = useNavigate();
@@ -31,16 +32,22 @@ const NavigationBar = () => {
     
     window.addEventListener('storage', updateFromStorage);
     
-    const loadCartCount = () => {
-      const cart = JSON.parse(localStorage.getItem('cart') || '[]');
-      const count = cart.reduce((sum, item) => sum + (item.quantity || 0), 0);
-      setCartCount(count);
+    const loadCartCount = async () => {
+      if (token) {
+        try {
+          const response = await getCart();
+          const count = response.data.totalItems || 0;
+          setCartCount(count);
+        } catch (error) {
+          console.error('Erreur chargement panier:', error);
+        }
+      }
     };
     
     loadCartCount();
     
     return () => window.removeEventListener('storage', updateFromStorage);
-  }, []);
+  }, [token]);
 
   const handleLogout = () => {
     localStorage.removeItem('token');

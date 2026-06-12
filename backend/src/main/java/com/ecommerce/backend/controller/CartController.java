@@ -7,9 +7,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Random;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/cart")
@@ -20,17 +23,23 @@ public class CartController {
     private final ProductRepository productRepository;
     private final CartRepository cartRepository;
     private final CartItemRepository cartItemRepository;
+    private final OrderRepository orderRepository;
+    private final OrderItemRepository orderItemRepository;
     private final JwtUtil jwtUtil;
 
     public CartController(UserRepository userRepository,
                          ProductRepository productRepository,
                          CartRepository cartRepository,
                          CartItemRepository cartItemRepository,
+                         OrderRepository orderRepository,
+                         OrderItemRepository orderItemRepository,
                          JwtUtil jwtUtil) {
         this.userRepository = userRepository;
         this.productRepository = productRepository;
         this.cartRepository = cartRepository;
         this.cartItemRepository = cartItemRepository;
+        this.orderRepository = orderRepository;
+        this.orderItemRepository = orderItemRepository;
         this.jwtUtil = jwtUtil;
     }
 
@@ -192,5 +201,149 @@ public class CartController {
         cartRepository.save(cart);
         
         return ResponseEntity.ok(Map.of("message", "Panier vidé"));
+    }
+
+    @PostMapping("/checkout")
+    public ResponseEntity<?> checkout(@RequestBody Map<String, Object> data,
+                                     @RequestHeader(value = "Authorization", required = false) String token) {
+        User user = getUserFromToken(token);
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("error", "Non authentifié"));
+        }
+        
+        Cart cart = cartRepository.findByUser(user).orElseThrow(() -> 
+                new RuntimeException("Panier non trouvé"));
+        
+        if (cart.getItems().isEmpty()) {
+            return ResponseEntity.badRequest().body(Map.of("error", "Panier vide"));
+        }
+        
+        String shippingAddress = (String) data.get("shippingAddress");
+        String phoneNumber = (String) data.get("phoneNumber");
+        
+        // Create order
+        Order order = new Order();
+        order.setUser(user);
+        order.setOrderNumber("ORD-" + UUID.randomUUID().toString().substring(0, 8).toUpperCase());
+        order.setShippingAddress(shippingAddress);
+        order.setPhoneNumber(phoneNumber);
+        
+        // Generate verification code
+        Random random = new Random();
+        String verificationCode = String.format("%06d", random.nextInt(1000000));
+        order.setVerificationCode(verificationCode);
+        
+        double total = 0;
+        
+        for (CartItem cartItem : cart.getItems()) {
+            Product product = cartItem.getProduct();
+            
+            // Check stock again
+            if (product.getQuantity() < cartItem.getQuantity()) {
+                return ResponseEntity.badRequest().body(Map.of("error", 
+                    "Stock insuffisant pour le produit: " + product.getName()));
+            }
+            
+            // Create order item
+            OrderItem orderItem = new OrderItem();
+            orderItem.setOrder(order);
+            orderItem.setProduct(product);
+            orderItem.setQuantity(cartItem.getQuantity());
+            orderItem.setPriceAtTime(product.getSellingPrice());
+            order.getItems().add(orderItem);
+            
+            total += product.getSellingPrice() * cartItem.getQuantity();
+        }
+        
+        order.setTotalAmount(total);
+        Order savedOrder = orderRepository.save(order);
+        
+        // Clear cart
+        cart.getItems().clear();
+        cartRepository.save(cart);
+        
+        return ResponseEntity.ok(Map.of(
+                "message", "Commande créée",
+                "orderNumber", savedOrder.getOrderNumber(),
+                "verificationCode", verificationCode
+        ));
+    }
+
+    @PostMapping("/verify-order")
+    public ResponseEntity<?> verifyOrder(@RequestBody Map<String, String> data,
+                                        @RequestHeader(value = "Authorization", required = false) String token) {
+        User user = getUserFromToken(token);
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("error", "Non authentifié"));
+        }
+        
+        String orderNumber = data.get("orderNumber");
+        String code = data.get("verificationCode");
+        
+        Optional<Order> orderOpt = orderRepository.findByOrderNumber(orderNumber);
+        if (orderOpt.isEmpty()) {
+            return ResponseEntity.badRequest().body(Map.of("error", "Commande non trouvée"));
+        }
+        
+        Order order = orderOpt.get();
+        
+        if (!order.getUser().getId().equals(user.getId())) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(Map.of("error", "Accès refusé"));
+        }
+        
+        if (!order.getVerificationCode().equals(code)) {
+            return ResponseEntity.badRequest().body(Map.of("error", "Code de vérification incorrect"));
+        }
+        
+        if (order.isVerified()) {
+            return ResponseEntity.badRequest().body(Map.of("error", "Commande déjà vérifiée"));
+        }
+        
+        // Verify order and update stock
+        order.setVerified(true);
+        order.setVerifiedAt(LocalDateTime.now());
+        order.setStatus(OrderStatus.VERIFIED);
+        
+        for (OrderItem orderItem : order.getItems()) {
+            Product product = orderItem.getProduct();
+            product.setQuantity(product.getQuantity() - orderItem.getQuantity());
+            productRepository.save(product);
+        }
+        
+        orderRepository.save(order);
+        
+        return ResponseEntity.ok(Map.of("message", "Commande vérifiée avec succès"));
+    }
+
+    @GetMapping("/my-orders")
+    public ResponseEntity<?> getMyOrders(@RequestHeader(value = "Authorization", required = false) String token) {
+        User user = getUserFromToken(token);
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("error", "Non authentifié"));
+        }
+        
+        return ResponseEntity.ok(orderRepository.findByUser(user));
+    }
+
+    @GetMapping("/order/{orderNumber}")
+    public ResponseEntity<?> getOrderDetail(@PathVariable String orderNumber,
+                                            @RequestHeader(value = "Authorization", required = false) String token) {
+        User user = getUserFromToken(token);
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("error", "Non authentifié"));
+        }
+        
+        Optional<Order> orderOpt = orderRepository.findByOrderNumber(orderNumber);
+        if (orderOpt.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        
+        Order order = orderOpt.get();
+        
+        if (!order.getUser().getId().equals(user.getId())) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(Map.of("error", "Accès refusé"));
+        }
+        
+        return ResponseEntity.ok(order);
     }
 }
