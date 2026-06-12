@@ -40,7 +40,7 @@ export const clearCart = () => api.delete('/cart/clear');
 
 // ==================== COMMANDES ====================
 export const checkout = (shippingAddress, phoneNumber) => api.post('/cart/checkout', { shippingAddress, phoneNumber });
-export const verifyOrder = (orderNumber, code) => api.post('/cart/verify-order', { orderNumber, code });
+export const verifyOrder = (orderNumber, verificationCode) => api.post('/cart/verify-order', { orderNumber, verificationCode });
 export const getMyOrders = () => api.get('/cart/my-orders');
 export const getOrderDetail = (orderNumber) => api.get(`/cart/order/${orderNumber}`);
 
