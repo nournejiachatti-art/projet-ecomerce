@@ -152,7 +152,7 @@ const NavigationBar = () => {
 
   return (
     <>
-      <Navbar className="navbar-custom py-3" expand="lg" sticky="top">
+      <Navbar className="navbar-custom py-2" expand="lg" sticky="top">
         <Container>
           <Navbar.Brand as={Link} to="/" className="fw-bold fs-2">
             ShopEase
@@ -160,24 +160,24 @@ const NavigationBar = () => {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="mx-auto">
-              <Nav.Link as={Link} to="/products" className="mx-3">Boutique</Nav.Link>
-              <Nav.Link as={Link} to="/" className="mx-3">Notre Marque</Nav.Link>
-              <Nav.Link as={Link} to="/about" className="mx-3">Notre histoire</Nav.Link>
-              <Nav.Link as={Link} to="/contact" className="mx-3">Contact</Nav.Link>
+              <Nav.Link as={Link} to="/products" className="mx-2">Boutique</Nav.Link>
+              <Nav.Link as={Link} to="/" className="mx-2">Notre Marque</Nav.Link>
+              <Nav.Link as={Link} to="/about" className="mx-2">Notre histoire</Nav.Link>
+              <Nav.Link as={Link} to="/contact" className="mx-2">Contact</Nav.Link>
               
               {/* Admin Menu - Only shows for admins */}
               {user?.role === 'ROLE_ADMIN' && (
                 <>
-                  <Nav.Link as={Link} to="/dashboard" className="mx-3 fw-bold" style={{ color: '#d9534f' }}>📊 Dashboard</Nav.Link>
-                  <Nav.Link as={Link} to="/manage-products" className="mx-3">📦 Produits</Nav.Link>
-                  <Nav.Link as={Link} to="/admin/orders" className="mx-3">📋 Commandes</Nav.Link>
-                  <Nav.Link as={Link} to="/manage-categories" className="mx-3">📂 Catégories</Nav.Link>
-                  <Nav.Link as={Link} to="/manage-users" className="mx-3">👥 Utilisateurs</Nav.Link>
-                  <Nav.Link as={Link} to="/manage-suppliers" className="mx-3">🤝 Fournisseurs</Nav.Link>
+                  <Nav.Link as={Link} to="/dashboard" className="mx-2 fw-bold" style={{ color: '#d9534f' }}>Dashboard</Nav.Link>
+                  <Nav.Link as={Link} to="/manage-products" className="mx-2">Produits</Nav.Link>
+                  <Nav.Link as={Link} to="/admin/orders" className="mx-2">Commandes</Nav.Link>
+                  <Nav.Link as={Link} to="/manage-categories" className="mx-2">Catégories</Nav.Link>
+                  <Nav.Link as={Link} to="/manage-users" className="mx-2">Utilisateurs</Nav.Link>
+                  <Nav.Link as={Link} to="/manage-suppliers" className="mx-2">Fournisseurs</Nav.Link>
                 </>
               )}
             </Nav>
-            <div className="d-flex align-items-center gap-3">
+            <div className="d-flex align-items-center gap-2">
               <Nav.Link as={Link} to="/cart" className="position-relative">
                 Panier
                 {cartCount > 0 && (

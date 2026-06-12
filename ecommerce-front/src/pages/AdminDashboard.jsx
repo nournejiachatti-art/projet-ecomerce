@@ -6,7 +6,7 @@ import {
   PieChart, Pie, Cell, LineChart, Line, AreaChart, Area,
   ResponsiveContainer
 } from 'recharts';
-import Sidebar from '../components/admin/Sidebar';
+import Navbar from '../components/layout/Navbar';
 import LoadingSpinner from '../components/common/LoadingSpinner';
 import { getPublicProducts, getSuppliers, getInvoices, getAllOrders, getCategories } from '../services/api';
 
@@ -122,6 +122,7 @@ const AdminDashboard = () => {
 
   return (
     <>
+      <Navbar />
       <Container fluid className="py-4">
           {/* Header */}
           <div className="mb-4">

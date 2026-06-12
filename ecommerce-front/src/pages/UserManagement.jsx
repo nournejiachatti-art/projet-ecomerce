@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Container, Row, Col, Card, Button, Table, Alert, Badge } from 'react-bootstrap';
-
+import Navbar from '../components/layout/Navbar';
 import LoadingSpinner from '../components/common/LoadingSpinner';
 import { getAllUsers, toggleUserStatus, deleteUser } from '../services/api';
 
@@ -89,6 +89,7 @@ const UserManagement = () => {
 
   return (
     <>
+      <Navbar />
       <Container fluid className="py-4" style={{ backgroundColor: '#f0f2f5', minHeight: '100vh' }}>
           <div className="mb-4">
             <h1 style={{ color: '#2c4a5e', fontFamily: 'Playfair Display' }}>Gestion des Utilisateurs</h1>

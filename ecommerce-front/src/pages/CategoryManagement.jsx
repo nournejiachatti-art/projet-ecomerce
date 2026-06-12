@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Container, Row, Col, Card, Button, Table, Form, Modal, Alert, Pagination } from 'react-bootstrap';
-
+import Navbar from '../components/layout/Navbar';
 import LoadingSpinner from '../components/common/LoadingSpinner';
 import { getCategories, createCategory, updateCategory, deleteCategory } from '../services/api';
 
@@ -159,6 +159,7 @@ const CategoryManagement = () => {
 
   return (
     <>
+      <Navbar />
       <Container fluid className="py-4" style={{ backgroundColor: '#f0f2f5', minHeight: '100vh' }}>
           <div className="d-flex justify-content-between align-items-center mb-4">
             <div>

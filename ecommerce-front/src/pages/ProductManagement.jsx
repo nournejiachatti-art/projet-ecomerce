@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Container, Row, Col, Card, Button, Table, Form, Modal, Alert, Pagination } from 'react-bootstrap';
+import Navbar from '../components/layout/Navbar';
 import LoadingSpinner from '../components/common/LoadingSpinner';
 import { getPublicProducts, getCategories, createProduct, updateProduct, deleteProduct } from '../services/api';
 import { uploadImage, getImageUrl, deleteImage } from '../services/imageUploadService';
@@ -20,7 +21,8 @@ const ProductManagement = () => {
     purchasePrice: '',
     sellingPrice: '',
     categoryId: '',
-    imageUrl: ''
+    imageUrl: '',
+    stock: ''
   });
   const [alert, setAlert] = useState(null);
   
@@ -135,7 +137,8 @@ const ProductManagement = () => {
         purchasePrice: parseFloat(formData.purchasePrice),
         sellingPrice: parseFloat(formData.sellingPrice),
         categoryId: formData.categoryId ? parseInt(formData.categoryId) : null,
-        imageUrl: formData.imageUrl || null
+        imageUrl: formData.imageUrl || null,
+        stock: formData.stock ? parseInt(formData.stock) : 0
       };
       
       if (editingProduct) {
@@ -165,7 +168,8 @@ const ProductManagement = () => {
       purchasePrice: product.purchasePrice,
       sellingPrice: product.sellingPrice,
       categoryId: product.category?.id || '',
-      imageUrl: product.imageUrl || ''
+      imageUrl: product.imageUrl || '',
+      stock: product.stock || ''
     });
     setImagePreview(product.imageUrl);
     setShowModal(true);
@@ -200,7 +204,8 @@ const ProductManagement = () => {
       purchasePrice: '',
       sellingPrice: '',
       categoryId: '',
-      imageUrl: ''
+      imageUrl: '',
+      stock: ''
     });
     setSelectedImage(null);
     setImagePreview(null);
@@ -219,6 +224,7 @@ const ProductManagement = () => {
 
   return (
     <>
+      <Navbar />
       <Container fluid className="py-4">
           <div className="d-flex justify-content-between align-items-center mb-4">
             <div>
@@ -428,6 +434,20 @@ const ProductManagement = () => {
                         />
                       </Col>
                     </Row>
+                    
+                    <Form.Group className="mb-3">
+                      <Form.Label style={{ color: '#2c4a5e', fontWeight: '500' }}>Stock (nombre d'unités) *</Form.Label>
+                      <Form.Control
+                        type="number"
+                        name="stock"
+                        required
+                        min="0"
+                        value={formData.stock}
+                        onChange={handleChange}
+                        placeholder="0"
+                        style={{ borderRadius: '10px', padding: '10px 15px' }}
+                      />
+                    </Form.Group>
                     
                     <Form.Group className="mb-3">
                       <Form.Label style={{ color: '#2c4a5e', fontWeight: '500' }}>Catégorie</Form.Label>
