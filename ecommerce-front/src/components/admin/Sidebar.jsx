@@ -14,7 +14,7 @@ const Sidebar = () => {
     position: 'fixed',
     top: 0,
     left: 0,
-    width: '280px',
+    width: '240px',
     height: '100vh',
     backgroundColor: '#1a6b6b',
     color: 'white',
@@ -25,7 +25,7 @@ const Sidebar = () => {
     margin: '0',
     display: 'flex',
     flexDirection: 'column',
-    border: '3px solid red'  // DEBUG: Make it visible
+    // keep layout neat and remove debug border
   };
 
   const headerStyle = {
@@ -81,8 +81,8 @@ const Sidebar = () => {
     <div style={sidebarStyle}>
       {/* Header */}
       <div style={headerStyle}>
-        <h3 style={{ fontFamily: 'Playfair Display', margin: 0, fontSize: '1.5rem' }}>ShopEase SIDEBAR</h3>
-        <p style={{ fontSize: '0.75rem', opacity: 0.7, margin: '0.5rem 0 0' }}>Admin Panel - VISIBLE TEST</p>
+        <h3 style={{ fontFamily: 'Playfair Display', margin: 0, fontSize: '1.5rem' }}>ShopEase</h3>
+        <p style={{ fontSize: '0.75rem', opacity: 0.8, margin: '0.5rem 0 0' }}>Espace administration</p>
       </div>
 
       {/* Navigation */}

@@ -163,9 +163,10 @@ const ProductsPage = () => {
                       src={getDisplayImageUrl(product.imageUrl)} 
                       alt={product.name}
                       style={{ 
-                        height: '240px', 
+                        height: '100%', 
                         width: '100%',
-                        objectFit: 'cover', 
+                        objectFit: 'contain', 
+                        objectPosition: 'center',
                         transition: 'transform 0.5s ease',
                         cursor: 'pointer'
                       }}

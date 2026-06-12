@@ -123,7 +123,7 @@ const AdminDashboard = () => {
   return (
     <>
       <Navbar />
-      <Container fluid className="py-4">
+      <Container fluid className="py-4" style={{ marginLeft: '240px' }}>
           {/* Header */}
           <div className="mb-4">
             <h1 style={{ color: '#2c4a5e', fontFamily: 'Playfair Display' }}>Tableau de bord</h1>

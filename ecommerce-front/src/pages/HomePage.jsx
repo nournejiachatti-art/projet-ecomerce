@@ -87,8 +87,11 @@ const HomePage = () => {
                     boxShadow: '0 20px 40px rgba(0,0,0,0.1)',
                     overflow: 'hidden',
                     position: 'relative',
-                    background:
-                      `linear-gradient(135deg, rgba(255,255,255,0.75), rgba(255,255,255,0.15)), url("${themeGallery[0]}") center/cover`,
+                    backgroundImage: `linear-gradient(135deg, rgba(255,255,255,0.75), rgba(255,255,255,0.15)), url("${themeGallery[0]}")`,
+                    backgroundPosition: 'center',
+                    backgroundRepeat: 'no-repeat',
+                    backgroundSize: 'contain',
+                    backgroundColor: '#faf7f0'
                   }}
                 >
                   <div
@@ -196,7 +199,7 @@ const HomePage = () => {
                       variant="top"
                       src={getDisplayImageUrl(product.imageUrl || product.image)}
                       alt={product.name}
-                      style={{ height: '220px', width: '100%', objectFit: 'cover', cursor: 'pointer' }}
+                      style={{ height: '220px', width: '100%', objectFit: 'contain', objectPosition: 'center', cursor: 'pointer', backgroundColor: '#f5f5f5' }}
                     />
                   </div>
                   <Card.Body className="d-flex flex-column">
