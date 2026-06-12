@@ -21,7 +21,6 @@ public class Category {
     
     @ManyToOne
     @JoinColumn(name = "parent_id")
-    @JsonIgnore
     private Category parentCategory;
     
     @OneToMany(mappedBy = "parentCategory", cascade = CascadeType.ALL)
