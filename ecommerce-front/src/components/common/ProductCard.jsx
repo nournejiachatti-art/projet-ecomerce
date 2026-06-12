@@ -1,10 +1,11 @@
 import React from 'react';
 import { Card, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+import { getImageUrl } from '../../services/imageUploadService';
 
 const ProductCard = ({ product }) => {
   const navigate = useNavigate();
-  const imageUrl = product.imageUrl || 'https://via.placeholder.com/300x200';
+  const imageUrl = getImageUrl(product.imageUrl) || 'https://via.placeholder.com/300x200';
 
   return (
     <Card className="product-card h-100">
