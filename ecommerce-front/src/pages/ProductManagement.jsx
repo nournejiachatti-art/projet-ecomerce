@@ -493,8 +493,10 @@ const ProductManagement = () => {
                               style={{ 
                                 width: '100%', 
                                 maxHeight: '150px', 
-                                objectFit: 'cover', 
-                                borderRadius: '8px' 
+                                objectFit: 'contain', 
+                                objectPosition: 'center',
+                                borderRadius: '8px',
+                                backgroundColor: '#faf7f0'
                               }}
                             />
                           ) : (

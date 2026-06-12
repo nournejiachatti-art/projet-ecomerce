@@ -8,11 +8,13 @@ const ProductCard = ({ product }) => {
 
   return (
     <Card className="product-card h-100">
-      <Card.Img 
-        variant="top" 
-        src={imageUrl} 
-        style={{ height: '200px', objectFit: 'cover' }}
-      />
+      <div style={{ overflow: 'hidden', height: '200px', backgroundColor: '#f5f5f5', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <Card.Img 
+          variant="top" 
+          src={imageUrl} 
+          style={{ height: '100%', width: '100%', objectFit: 'contain', objectPosition: 'center' }}
+        />
+      </div>
       <Card.Body>
         <Card.Title className="fw-bold">{product.name}</Card.Title>
         <Card.Text className="text-muted">{product.description?.substring(0, 80)}...</Card.Text>
