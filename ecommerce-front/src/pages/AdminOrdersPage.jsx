@@ -107,10 +107,8 @@ const AdminOrdersPage = () => {
   if (loading) return <LoadingSpinner />;
 
   return (
-    <div style={{ display: 'flex' }}>
-      <Sidebar />
-      <div style={{ marginLeft: '280px', flex: 1, backgroundColor: '#f0f2f5', minHeight: '100vh' }}>
-        <Container fluid className="py-4">
+    <>
+      <Container fluid className="py-4" style={{ backgroundColor: '#f0f2f5', minHeight: '100vh' }}>
           <div className="mb-4">
             <h1 style={{ color: '#2c4a5e', fontFamily: 'Playfair Display' }}>Gestion des commandes</h1>
             <p style={{ color: '#4a5a5a' }}>Consultez et gérez toutes les commandes clients</p>
@@ -297,7 +295,6 @@ const AdminOrdersPage = () => {
             </Card.Body>
           </Card>
         </Container>
-      </div>
 
       {/* Modal Détail Commande */}
       <Modal show={showDetailModal} onHide={() => setShowDetailModal(false)} size="lg" centered>
@@ -383,7 +380,7 @@ const AdminOrdersPage = () => {
           </Button>
         </Modal.Footer>
       </Modal>
-    </div>
+    </>
   );
 };
 

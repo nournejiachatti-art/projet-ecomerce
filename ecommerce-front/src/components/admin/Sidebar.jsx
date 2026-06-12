@@ -20,11 +20,12 @@ const Sidebar = () => {
     color: 'white',
     overflowY: 'auto',
     overflowX: 'hidden',
-    zIndex: 9999,
+    zIndex: 99999,
     padding: '0',
     margin: '0',
     display: 'flex',
-    flexDirection: 'column'
+    flexDirection: 'column',
+    border: '3px solid red'  // DEBUG: Make it visible
   };
 
   const headerStyle = {
@@ -80,8 +81,8 @@ const Sidebar = () => {
     <div style={sidebarStyle}>
       {/* Header */}
       <div style={headerStyle}>
-        <h3 style={{ fontFamily: 'Playfair Display', margin: 0, fontSize: '1.5rem' }}>ShopEase</h3>
-        <p style={{ fontSize: '0.75rem', opacity: 0.7, margin: '0.5rem 0 0' }}>Admin Panel</p>
+        <h3 style={{ fontFamily: 'Playfair Display', margin: 0, fontSize: '1.5rem' }}>ShopEase SIDEBAR</h3>
+        <p style={{ fontSize: '0.75rem', opacity: 0.7, margin: '0.5rem 0 0' }}>Admin Panel - VISIBLE TEST</p>
       </div>
 
       {/* Navigation */}

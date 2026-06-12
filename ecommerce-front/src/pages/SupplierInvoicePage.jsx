@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Container, Row, Col, Card, Button, Table, Form, Modal, Alert, Pagination } from 'react-bootstrap';
-import Sidebar from '../components/admin/Sidebar';
+
 import LoadingSpinner from '../components/common/LoadingSpinner';
 import { getSuppliers, getPublicProducts, createInvoice, getInvoices, deleteInvoice } from '../services/api';
 
@@ -198,10 +198,8 @@ const SupplierInvoicePage = () => {
   if (loading) return <LoadingSpinner />;
 
   return (
-    <div style={{ display: 'flex' }}>
-      <Sidebar />
-      <div style={{ marginLeft: '280px', flex: 1, backgroundColor: '#f0f2f5', minHeight: '100vh' }}>
-        <Container fluid className="py-4">
+    <>
+      <Container fluid className="py-4" style={{ backgroundColor: '#f0f2f5', minHeight: '100vh' }}>
           <div className="d-flex justify-content-between align-items-center mb-4">
             <div>
               <h1 style={{ color: '#2c4a5e', fontFamily: 'Playfair Display' }}>Factures Fournisseurs</h1>
@@ -424,8 +422,7 @@ const SupplierInvoicePage = () => {
             </Form>
           </Modal>
         </Container>
-      </div>
-    </div>
+    </>
   );
 };
 

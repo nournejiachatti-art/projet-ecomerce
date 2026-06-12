@@ -121,10 +121,8 @@ const AdminDashboard = () => {
   if (loading) return <LoadingSpinner />;
 
   return (
-    <div style={{ display: 'flex' }}>
-      <Sidebar />
-      <div style={{ marginLeft: '280px', flex: 1, backgroundColor: '#f0f2f5', minHeight: '100vh' }}>
-        <Container fluid className="py-4">
+    <>
+      <Container fluid className="py-4">
           {/* Header */}
           <div className="mb-4">
             <h1 style={{ color: '#2c4a5e', fontFamily: 'Playfair Display' }}>Tableau de bord</h1>
@@ -387,8 +385,7 @@ const AdminDashboard = () => {
             </Col>
           </Row>
         </Container>
-      </div>
-    </div>
+    </>
   );
 };
 
