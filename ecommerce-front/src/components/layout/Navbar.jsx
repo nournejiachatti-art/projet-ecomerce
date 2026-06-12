@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Navbar, Nav, Container, Button, Modal, Form, Alert } from 'react-bootstrap';
-import { getCart } from '../services/api';
+import { getCart } from '../../services/api';
 
 const NavigationBar = () => {
   const navigate = useNavigate();
